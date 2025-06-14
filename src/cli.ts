@@ -1,6 +1,7 @@
 import * as fs from "fs";
 import csv from "csv-parser";
 import { format as csvFormat } from "fast-csv";
+import { parseTable } from "./rotate-table";
 
 function main() {
   const args = process.argv.slice(2);
@@ -33,13 +34,19 @@ function main() {
   readStream
     .pipe(csvReadStream)
     .on("data", (row: any) => {
-      const isValid = true;
-      const rotatedJson = row.json;
+      if (row._0 === "id" && row._1 === "json") {
+        return;
+      }
+
+      const tableResult = parseTable(row._1);
+      const outputJson = tableResult.isValid
+        ? JSON.stringify(tableResult.rotatedData)
+        : "[]";
 
       csvWriteStream.write({
-        id: row.id,
-        json: rotatedJson,
-        is_valid: isValid,
+        id: row._0,
+        json: outputJson,
+        is_valid: tableResult.isValid,
       });
     })
     .on("end", () => {
