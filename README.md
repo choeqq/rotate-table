@@ -11,12 +11,20 @@ npm run dev input.csv > output.csv # writes to file
 
 ## Algorithm
 
-The program processes flat arrays as square matrices and rotates each ring by 1 step clockwise:
+The program implements a ring-based rotation approach:
 
 1. **Validation**: Only perfect square arrays are valid (length = n²)
-2. **Ring Processing**: Each concentric ring rotates independently
-3. **Element Movement**: Last element of each ring moves to the front
-4. **Center Handling**: Center element (for odd sizes) stays in place
+2. **Ring Processing**: Each concentric ring rotates independently by K steps clockwise
+3. **Element Extraction**: Collects ring elements in clockwise order (top→right→bottom→left)
+4. **Rotation**: Uses modulo arithmetic to optimize large step counts
+5. **Center Handling**: Center element (for odd sizes) stays in place
+
+## Key Features
+
+- **Efficient**: O(k²) time complexity where k = matrix side length
+- **Memory Optimized**: In-place matrix modification with temporary ring storage
+- **Robust**: Handles edge cases (empty matrices, single elements, large step counts)
+- **Configurable**: Supports rotation by any number of steps
 
 ## Input/Output Format
 

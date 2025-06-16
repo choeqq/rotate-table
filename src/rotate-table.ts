@@ -4,7 +4,15 @@ export interface TableResult {
 }
 
 function rotateMatrixKSteps(matrix: number[][], steps: number): void {
+  if (!matrix || matrix.length === 0) {
+    return;
+  }
+
   const n = matrix.length;
+
+  if (n === 1) {
+    return;
+  }
 
   for (let ring = 0; ring < Math.floor(n / 2); ring++) {
     const first = ring;
